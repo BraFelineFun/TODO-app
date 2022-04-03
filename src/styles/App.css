@@ -52,3 +52,76 @@
     width: 45px;
 }
 
+.modal__wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(57, 62, 70, 0.66);
+}
+.modal{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 320px;
+    height: 500px;
+    background-color: white;
+    border-radius: 5px;
+    border: 5px solid rgba(0, 169, 154, 0.21);
+    -webkit-box-shadow: 4px 10px 69px 55px rgba(0, 169, 154, 0.42);
+    -moz-box-shadow: 4px 10px 69px 55px rgba(0, 169, 154, 0.42);
+    box-shadow: 4px 10px 69px 55px rgba(0, 169, 154, 0.42);
+    padding: 25px 15px;
+}
+.modal h2{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+.modal label{
+    display: block;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+.modal input{
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #027a81;;
+}
+.modal button{
+    /*TODO ВЫДЕЛИТЬ В UI!!!!*/
+    height: 60px;
+    font-size: 24px;
+    border-radius: 25px;
+    outline: none;
+    border: 2px solid #027a81;
+}
+.modal__img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    background-color: #EEEEEE;
+    border-radius: 5px;
+}
+.modal__img img{
+    display: block;
+    height: 40px;
+    width: 40px;
+}
+
+
+
