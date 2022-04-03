@@ -1,19 +1,18 @@
 import React from 'react';
 import Task from "./Task";
 
-const TaskList = ({tasks, setTasks}) => {
-    function cons(){
-        console.log(tasks.length)
-    }
+const TaskList = ({tasks, setCheck, removeTask, title}) => {
+
     return (
         <div className="list">
-            {/*<h1></h1>*/}
-            <h2 style={{textAlign:"center"}}>
-                {tasks.length !== 0
-                    ? tasks.map((task) => <Task key={task.id} task={task} setTasks={setTasks}/>)
-                    : "Все задачи выполнены!!"
-                }
-            </h2>
+            <h1>{title}</h1>
+            {tasks.map((task) =>
+                <Task
+                    key={task.id}
+                    task={task}
+                    setCheck={setCheck}
+                    removeTask={removeTask}
+                />)}
         </div>
     );
 };

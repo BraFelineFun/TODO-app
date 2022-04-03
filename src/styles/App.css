@@ -35,11 +35,20 @@
 .list__done input{
     width: 50px;
     height: 50px;
+    cursor: pointer;
 }
 .list__label{
     margin-left: 50px;
     font-size: 24px;
     font-weight: bold;
 }
-
+.list__delete{
+    margin-left: auto;
+    cursor: pointer;
+}
+.list__delete img{
+    display: block;
+    height: 50px;
+    width: 45px;
+}
 
