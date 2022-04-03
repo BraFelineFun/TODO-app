@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import './styles/App.css'
 import TaskList from "./components/TaskList";
+import TaskForm from "./components/TaskForm";
+import MyButton from "./components/UI/button/MyButton";
 
 
 function App() {
@@ -10,12 +12,9 @@ function App() {
         {id:3, done:false, text:"Доброго времени суток, отец "},
     ]);
     const [isModal, setIsModal] = useState(false)
-    const [newTask, setNewTask] = useState({
-        name:'',
-        description:''
-    })
 
-    let createNewTask = () =>{
+
+    let addNewTask = (newTask) =>{
         const newTaskObj = {
             id: Date.now(),
             done:false,
@@ -23,8 +22,10 @@ function App() {
         }
         setIsModal(false)
         setTasks([...tasks, newTaskObj])
-        setNewTask({name: '', description: ''})
+
     }
+
+    let closeModal = () =>{setIsModal(false)}
 
     let checkBox_set = (id, checkbox) =>{
         console.log("меняем чекбокс")
@@ -44,50 +45,12 @@ function App() {
       <div className="content">
 
           <h1 style={{textAlign:"center", fontSize:"36px"}}>TODO LIST</h1>
-          <button onClick={() => setIsModal(true)}>Add task</button>
 
-          <div
-              style={{display: isModal === true ? "flex" :"none"}}
-              className="modal__wrapper"
-          >
-              <div className="modal">
-                  <div className="modal__img">
-                      <img
-                          src="https://cdn.onlinewebfonts.com/svg/download_32988.png"
-                          alt="close"
-                          onClick={() => setIsModal(false)}
-                      />
-                  </div>
-
-                  <h2>Add a new task</h2>
-                  <div className="modal__form">
-                      <div className="modal__inputData">
-                          <label htmlFor="taskName">Enter a task's name</label>
-                          <input
-                              value={newTask.name}
-                              onChange={e => {
-                                  setNewTask({...newTask, name:e.target.value})
-                              }}
-                              id={"taskName"}
-                              placeholder={"Enter name"}
-                              type="text"
-                          />
-                      </div>
-                      <div className="modal__inputData">
-                          <label htmlFor="">Enter a task's description</label>
-                            <input
-                                value={newTask.description}
-                                onChange={e => {
-                                    setNewTask({...newTask, description:e.target.value})
-                                }}
-                                disabled
-                                type="text"
-                            />
-                      </div>
-                  </div>
-                  <button onClick={createNewTask}>Add</button>
-              </div>
+          <div className="addTask">
+              <MyButton onClick={() => setIsModal(true)}>Add task</MyButton>
           </div>
+
+          <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
 
           <TaskList
               setCheck={checkBox_set}

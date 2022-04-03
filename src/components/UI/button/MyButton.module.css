@@ -1,0 +1,7 @@
+.myBut{
+    height: 60px;
+    font-size: 24px;
+    border-radius: 25px;
+    outline: none;
+    border: 2px solid #027a81;
+}
