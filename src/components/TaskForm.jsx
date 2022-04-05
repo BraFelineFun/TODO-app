@@ -12,6 +12,7 @@ const TaskForm = ({addNewTask, isModal, closeModal}) => {
 
     function createNewTask (){
         addNewTask(newTask);
+        closeModal();
         setNewTask({name: '', description: ''})
     }
 
