@@ -6,14 +6,15 @@ import Modal from "./UI/modal/modal";
 const TaskForm = ({addNewTask, isModal, closeModal}) => {
 
     const [newTask, setNewTask] = useState({
-        name:'',
-        description:''
+        id: 0,
+        done: false,
+        text: ''
     })
 
     function createNewTask (){
         addNewTask(newTask);
         closeModal();
-        setNewTask({name: '', description: ''})
+        setNewTask({id:0, done: false, text: ''})
     }
 
     return (
@@ -24,9 +25,9 @@ const TaskForm = ({addNewTask, isModal, closeModal}) => {
                 <div className="modal__inputData">
                     <label className='modal__label' htmlFor="taskName">Enter a task's name</label>
                     <MyInputText
-                        value={newTask.name}
+                        value={newTask.text}
                         onChange={e => {
-                            setNewTask({...newTask, name:e.target.value})
+                            setNewTask({...newTask, id:Date.now(), text:e.target.value })
                         }}
                         id={"taskName"}
                         placeholder={"Enter name"}
