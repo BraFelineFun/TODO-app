@@ -4,11 +4,13 @@ import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 import MyButton from "./components/UI/button/MyButton";
 import MyLoad from "./components/UI/load/MyLoad";
+import Undo from "./components/Undo";
 
 
 function App() {
     //TODO Drag'n'Drop таксов
-    //TODO Сохранение в куки
+    //
+
     const [tasks, setTasks] = useState([
         // {
         //     // id: 1,
@@ -19,16 +21,16 @@ function App() {
     const  urlTODO = "https://jsonplaceholder.typicode.com/todos";
     const [isModal, setIsModal] = useState(false)
     const [isDataLoaded, setIsDataLoaded] = useState(false);
-    const [isUndo, setIsUndo] = useState(false);
+    const [isUndo, setIsUndo] = useState({show: false, task_id: 0} );
 
     useEffect( () => {
         if (localStorage.length === 0){
-            getTodos().then(setIsDataLoaded(true));
+            getTodos();
             localStorage.setItem('tasks', '[]');
         }
         else{
             JSON.parse(localStorage.tasks).forEach(task =>{
-                console.log(task);
+                // console.log(task);
                 addNewTask(task);
             })
             setIsDataLoaded(true);
@@ -36,12 +38,14 @@ function App() {
     },[])
 
 
+
      async function getTodos (){
         try{
-            let response = await fetch(urlTODO + "?_limit=5");
+            let response = await fetch(urlTODO + "?_limit=10");
             if (response.ok) {
                 let answer = await response.json();
                 answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
+                setIsDataLoaded(true)
             }
             else
                 console.log(`Ошибка загрузки данных: ${response.status}`)
@@ -78,17 +82,8 @@ function App() {
         localStorage.tasks = JSON.stringify(store);
     }
 
-    let undoTimer;
-
     let removeTask = (task_unit) =>{
         setTasks(tasks.filter(task => task.id !== task_unit.id))
-        // let storeArr = localStorage.tasks.split('{');
-        // let newStore = "[";
-        // for (let i = 1; i < storeArr.length; i++)
-        //     if (!storeArr[i].includes(task_unit.id))
-        //         newStore += "{" + storeArr[i];
-        //     else if (i === storeArr.length - 1)
-        //         newStore = newStore.slice(0, newStore.length-1) + "]";
 
         // undoTimer = setTimeout(() => {
         //     console.log("начинаю удалять");
@@ -97,24 +92,14 @@ function App() {
         //     localStorage.tasks = JSON.stringify(store);
         //
         // }, 5000)
-        // setIsUndo(true);
-
-            let store = JSON.parse(localStorage.tasks);
-            store = store.filter(task => task.id !== task_unit.id);
-            localStorage.tasks = JSON.stringify(store);
+        console.log('removeTask: ' + task_unit.id)
+        setIsUndo({show: true, task_id: task_unit.id});
     }
 
   return (
     <div className="App">
-        <div style={{display: !isUndo? 'none': 'flex'}} className="undo">
-            <span>task is removed</span>
-            <MyButton onClick={() => {
-                addNewTask()
-                clearTimeout(undoTimer);
-                setIsUndo(false);
-            }}>UNDO</MyButton>
-        </div>
 
+        {isUndo.show && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}
         <div className="content">
           <h1 style={{textAlign:"center", fontSize:"36px"}}>TODO LIST</h1>
 
