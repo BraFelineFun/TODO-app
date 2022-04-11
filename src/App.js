@@ -9,7 +9,6 @@ import Undo from "./components/Undo";
 
 function App() {
     //TODO Drag'n'Drop таксов
-    //
 
     const [tasks, setTasks] = useState([
         // {
@@ -84,15 +83,6 @@ function App() {
 
     let removeTask = (task_unit) =>{
         setTasks(tasks.filter(task => task.id !== task_unit.id))
-
-        // undoTimer = setTimeout(() => {
-        //     console.log("начинаю удалять");
-        //     let store = JSON.parse(localStorage.tasks);
-        //     store = store.filter(task => task.id !== task_unit.id);
-        //     localStorage.tasks = JSON.stringify(store);
-        //
-        // }, 5000)
-        console.log('removeTask: ' + task_unit.id)
         setIsUndo({show: true, task_id: task_unit.id});
     }
 

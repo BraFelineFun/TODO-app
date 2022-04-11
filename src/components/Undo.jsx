@@ -5,19 +5,25 @@ const Undo = ({addNewTask, undoState}) => {
 
 
     useEffect( () =>{
-        let undoTimer = setTimeout(() => {
+        console.log('UseEffect ' + undoState.isUndo.task_id)
 
+        let undoTimer = setTimeout((_undoState = undoState) => {
+            console.log('удаление элемента' + _undoState.isUndo.task_id)
             let store = JSON.parse(localStorage.tasks);
-            store = store.filter(task => task.id !== undoState.isUndo.task_id);
+            store = store.filter(task => task.id !== _undoState.isUndo.task_id);
             localStorage.tasks = JSON.stringify(store);
 
-            undoState.setIsUndo({show: false, task_id: 0});
-        }, 10000)
+            _undoState.setIsUndo({show: false, task_id: 0});
+        }, 5000)
+
+        console.log("timer id = " + undoTimer);
+
 
         return () =>{
             clearTimeout(undoTimer);
+            console.log("удаление компонента");
         }
-    }, [])
+    }, [undoState])
 
 
     return (
