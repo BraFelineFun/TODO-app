@@ -40,7 +40,7 @@ function App() {
 
      async function getTodos (){
         try{
-            let response = await fetch(urlTODO + "?_limit=10");
+            let response = await fetch(urlTODO + "?_limit=1");
             if (response.ok) {
                 let answer = await response.json();
                 answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
@@ -88,8 +88,8 @@ function App() {
 
   return (
     <div className="App">
-
         {isUndo.show && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}
+
         <div className="content">
           <h1 style={{textAlign:"center", fontSize:"36px"}}>TODO LIST</h1>
 
@@ -97,7 +97,9 @@ function App() {
               <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
           </div>
 
-          <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
+            {isModal &&
+                <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
+            }
 
           {!isDataLoaded &&
               <MyLoad/>

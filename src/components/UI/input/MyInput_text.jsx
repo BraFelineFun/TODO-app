@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import classes from './MyInputText.module.css'
-const MyInputText = (props) => {
+const MyInputText = forwardRef((props,ref) => {
     return (
-        <input{...props} className={classes.myInpText} type="text"/>
+        <input{...props} ref={ref} className={classes.myInpText} type="text"/>
     );
-};
+});
 
 export default MyInputText;

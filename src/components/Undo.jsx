@@ -1,27 +1,39 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyButton from "./UI/button/MyButton";
 
 const Undo = ({addNewTask, undoState}) => {
 
+    const timeoutTime = 5 * 1000; //set in seconds
+
+    const [currentUndo, setCurrentUndo] = useState({task_id: undoState.isUndo.task_id, show: undoState.isUndo.show});
+
+    useEffect(() =>{
+        console.log("currentUndo = " + currentUndo.show);
+    }, [currentUndo])
 
     useEffect( () =>{
-        console.log('UseEffect ' + undoState.isUndo.task_id)
+        // console.log('UseEffect ' + undoState.isUndo.task_id)
 
-        let undoTimer = setTimeout((_undoState = undoState) => {
-            console.log('удаление элемента' + _undoState.isUndo.task_id)
+        let undoTimer = setTimeout(_ => {
+            console.log('удаление элемента' + currentUndo.task_id)
             let store = JSON.parse(localStorage.tasks);
-            store = store.filter(task => task.id !== _undoState.isUndo.task_id);
+            store = store.filter(task => task.id !== currentUndo.task_id);
             localStorage.tasks = JSON.stringify(store);
 
-            _undoState.setIsUndo({show: false, task_id: 0});
-        }, 5000)
+            undoState.setIsUndo({show: false, task_id: 0});
+        }, timeoutTime)
 
         console.log("timer id = " + undoTimer);
 
 
         return () =>{
-            clearTimeout(undoTimer);
-            console.log("удаление компонента");
+            if (!currentUndo.show)
+            {
+                console.log("удаление таймера")
+                clearTimeout(undoTimer);
+            }
+            else
+                console.log("удаление компонента");
         }
     }, [undoState])
 
@@ -38,6 +50,7 @@ const Undo = ({addNewTask, undoState}) => {
                 let undoTask = JSON.parse(localStorage.tasks).filter(task => task.id === undoState.isUndo.task_id)[0];
                 addNewTask(undoTask);
                 undoState.setIsUndo({show:false, task_id: 0});
+                setCurrentUndo({show:false, task_id: 0});
             }}>UNDO</MyButton>
         </div>
     );
