@@ -24,7 +24,22 @@ function App() {
 
     useEffect( () => {
         if (localStorage.length === 0){
-            getTodos();
+            async function fetchData(){
+                try{
+                    let response = await fetch(urlTODO + "?_limit=1");
+                    if (response.ok) {
+                        let answer = await response.json();
+                        answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
+                        setIsDataLoaded(true)
+                    }
+                    else
+                        console.log(`Ошибка загрузки данных: ${response.status}`)
+                }
+                catch (e){
+                    console.log(`Произошла ошибка: ${e}`)
+                }
+            }
+            fetchData();
             localStorage.setItem('tasks', '[]');
         }
         else{
@@ -34,25 +49,10 @@ function App() {
             })
             setIsDataLoaded(true);
         }
-    },[])
+    }, [])
 
 
 
-     async function getTodos (){
-        try{
-            let response = await fetch(urlTODO + "?_limit=1");
-            if (response.ok) {
-                let answer = await response.json();
-                answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
-                setIsDataLoaded(true)
-            }
-            else
-                console.log(`Ошибка загрузки данных: ${response.status}`)
-        }
-        catch (e){
-            console.log(`Произошла ошибка: ${e}`)
-        }
-    }
 
     let addNewTask = (newTask) =>{
         setTasks(tasks => [...tasks, newTask])
@@ -73,7 +73,7 @@ function App() {
             : task
         ))
         let store = JSON.parse(localStorage.tasks);
-        store.map((task => {
+        store.forEach((task => {
                 if (task.id === id)
                     task.done = checkbox;
             }
