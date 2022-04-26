@@ -2,6 +2,8 @@
 
 My first own project in React should look like exactly like this 
 
+Link to deployed version: https://6265307624f612166298a386--loquacious-alpaca-562636.netlify.app/
+
 ## Key features
 
 probably will be added later :)
