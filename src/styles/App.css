@@ -20,6 +20,14 @@ html{
     font-family: "Roboto", sans-serif;
 }
 
+h1{
+    font-size: 36px;
+    line-height: 1.2;
+}
+nav{
+    display: none;
+}
+
 .content{
 
     margin: 0px auto;
@@ -36,6 +44,10 @@ html{
     box-shadow: 4px 0px 57px 79px rgba(193, 193, 193, 0.27);
 }
 
+header{
+    display: flex;
+    flex-direction: column;
+}
 
 
 .addTask{
@@ -43,7 +55,7 @@ html{
 }
 
 .addTask button{
-    width: 300px;
+    min-width: min(300px, 70vw);
     border: 5px solid #027a81;
     background-color: white;
     font-weight: 700;
@@ -166,4 +178,52 @@ html{
 }
 
 
+@media screen and (max-width: 805px) {
+    html{
 
+        scroll-behavior: smooth;
+    }
+    body{
+        overflow: hidden;
+    }
+
+    .content{
+        border: 0;
+    }
+
+    header{
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 10vh;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--clrBgColor);
+        border-bottom: 2px solid var(--clrAccent);
+        padding: 0 5px;
+    }
+
+    nav{
+        display: flex;
+        flex-direction: column;
+
+    }
+    nav > a{
+        text-decoration: none;
+    }
+    .addTask{
+        margin: 0;
+    }
+    .content__placeholder{
+        height: 10vh;
+    }
+    .list{
+        max-height: 100vh;
+        height: 85vh;
+    }
+    .list:first-child{
+        margin-bottom: 15vh;
+    }
+}

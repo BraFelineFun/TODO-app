@@ -83,7 +83,10 @@ function App() {
 
     let removeTask = (task_unit) =>{
         setTasks(tasks.filter(task => task.id !== task_unit.id))
-        setIsUndo(task_unit.id);
+        let store = JSON.parse(localStorage.tasks);
+        store = store.filter(task => task.id !== task_unit.id);
+        localStorage.tasks = JSON.stringify(store);
+        // setIsUndo(task_unit.id);
     }
 
   return (
@@ -91,11 +94,19 @@ function App() {
         {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
 
         <div className="content">
-          <h1 style={{textAlign:"center", fontSize:"36px"}}>TODO LIST</h1>
+            <header>
+                <div className="header__title">
+                    <h1 >TODO LIST</h1>
+                </div>
+                <nav>
+                    <a href={"#Undone Tasks"}>Undo tasks</a>
+                    <a href={"#Done Tasks"}>Done tasks</a>
+                </nav>
+                <div className="addTask">
+                    <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
+                </div>
+            </header>
 
-          <div className="addTask">
-              <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
-          </div>
 
             {isModal &&
                 <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
@@ -104,7 +115,11 @@ function App() {
           {!isDataLoaded &&
               <MyLoad/>
           }
+            {/*//TODO: Перенести внутрь!!!!!*/}
+            <div className="content__placeholder"><a name={"Undone Tasks"}></a></div>
           {isDataLoaded &&
+
+
               <TaskList
                   setCheck={checkBox_set}
                   tasks={tasks.filter(task => task.done === false)}
@@ -112,6 +127,8 @@ function App() {
                   title={"Undone Tasks"}
               />
           }
+
+          <div className="content__placeholder"><a name={"Done Tasks"}></a></div>
           {isDataLoaded &&
               <TaskList
                   setCheck={checkBox_set}

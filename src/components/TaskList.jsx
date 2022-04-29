@@ -5,6 +5,7 @@ const TaskList = ({tasks, setCheck, removeTask, title}) => {
 
     return (
         <div className="list">
+
             <h1>{title}</h1>
             {tasks.length !== 0
                 ?tasks.map((task) =>
