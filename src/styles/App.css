@@ -6,25 +6,31 @@
     box-sizing: border-box;
 }
 :root {
-    --scrollbarBg: #393E46;
-    --scrollbarThumb: rgba(255, 255, 255, 0.8);
+    --clrBgColor: #EEEEEE;
+    --clrPrimary: #027a81;
+    --clrAccent: #393E46;
+    --clrContentBorder: #99D6FFFF;
+    --scrollbarThumb: rgb(176, 250, 255);
     --scrollbarWidth: 12px;
-    --scrollbarBorder: 3px solid var(--scrollbarBg);
+    --scrollbarBorder: 3px solid var(--clrAccent);
     --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
 }
-.App{
+html{
+    font-size: 1.25rem;
     font-family: "Roboto", sans-serif;
 }
 
 .content{
 
     margin: 0px auto;
-    width: 800px;
-    min-height: 50vh;
-    background-color: #EEEEEE;
-    border-radius: 1vw;
     padding: 20px 20px;
-    border: 15px solid rgba(0, 158, 255, 0.51);
+    max-width: 800px;
+    min-height: 50vh;
+
+    background-color: var(--clrBgColor);
+    border-radius: 1rem;
+    border: 0.5rem solid var(--clrContentBorder);
+
     -webkit-box-shadow: 4px 0px 57px 79px rgba(193, 193, 193, 0.27);
     -moz-box-shadow: 4px 0px 57px 79px rgba(193, 193, 193, 0.27);
     box-shadow: 4px 0px 57px 79px rgba(193, 193, 193, 0.27);
@@ -43,19 +49,19 @@
     font-weight: 700;
 }
 
-
+/*Scrollbar change*/
 .list {
     scrollbar-width: var(--scrollbarWidth);
-    scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+    scrollbar-color: var(--clrBgColor) var(--clrAccent);
 }
 .list::-webkit-scrollbar {
     width: var(--scrollbarWidth);
 }
 .list::-webkit-scrollbar-track {
-    background: var(--scrollbarBg);
+    background: var(--clrAccent);
 }
 .list::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbarThumb);
+    background-color: var(--clrBgColor);
     border-radius: var(--scrollbarBorderRadius);
     border: var(--scrollbarBorder);
 }
@@ -65,16 +71,17 @@
 .list{
     margin: 20px 0;
     padding: 50px;
-    border: 5px solid #393E46;
+    border: 5px solid var(--clrAccent);
     border-radius: 5px;
     max-height: 40vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
 }
 .list__cell{
     display: flex;
     align-items: center;
-    background-color: #027a81;
+    background-color: var(--clrPrimary);
     min-height: 100px;
     border-radius: 5px;
     color:white;
@@ -140,7 +147,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    border: 5px solid #004850;
+    border: 5px solid var(--clrAccent);
     border-bottom: 0px;
     background-color: #fff;
 
@@ -153,7 +160,7 @@
 }
 .undo button{
     width: 200px;
-    border: 5px solid #004850;
+    border: 5px solid var(--clrPrimary);
     font-weight: 700;
     margin-right: 0;
 }

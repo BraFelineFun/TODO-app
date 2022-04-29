@@ -16,7 +16,6 @@ const Modal = ({children, isModal, closeModal, ...props}) => {
         >
             {interpolatedStyles => (
             <div
-                // style={{display: isModal === true ? "flex" :"none"}}
                 className={classes.modal__wrapper}
                 onClick={closeModal}
             >

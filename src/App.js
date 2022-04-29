@@ -20,7 +20,7 @@ function App() {
     const  urlTODO = "https://jsonplaceholder.typicode.com/todos";
     const [isModal, setIsModal] = useState(false)
     const [isDataLoaded, setIsDataLoaded] = useState(false);
-    const [isUndo, setIsUndo] = useState({show: false, task_id: 0} );
+    const [isUndo, setIsUndo] = useState(-1);
 
     useEffect( () => {
         if (localStorage.length === 0){
@@ -83,12 +83,12 @@ function App() {
 
     let removeTask = (task_unit) =>{
         setTasks(tasks.filter(task => task.id !== task_unit.id))
-        setIsUndo({show: true, task_id: task_unit.id});
+        setIsUndo(task_unit.id);
     }
 
   return (
     <div className="App">
-        {isUndo.show && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}
+        {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
 
         <div className="content">
           <h1 style={{textAlign:"center", fontSize:"36px"}}>TODO LIST</h1>
