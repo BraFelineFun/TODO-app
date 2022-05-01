@@ -17,10 +17,10 @@
     height: 500px;
     background-color: white;
     border-radius: 5px;
-    border: 5px solid rgba(0, 169, 154, 0.21);
-    -webkit-box-shadow: 4px 10px 69px 55px rgba(0, 169, 154, 0.42);
-    -moz-box-shadow: 4px 10px 69px 55px rgba(0, 169, 154, 0.42);
-    box-shadow: 4px 10px 69px 55px rgba(0, 169, 154, 0.42);
+    border: 5px solid var(--clrBgColor);
+    -webkit-box-shadow: 4px 10px 69px 55px rgba(var(--clrPrimary), 0.3);
+    -moz-box-shadow: 4px 10px 69px 55px rgba(var(--clrPrimary), 0.3);
+    box-shadow: 4px 10px 69px 55px rgba(var(--clrPrimary), 0.3);
     padding: 25px 15px;
 }
 
@@ -34,7 +34,7 @@
     height: 50px;
     width: 50px;
     cursor: pointer;
-    background-color: #EEEEEE;
+    background-color: var(--clrBgColor);
     border-radius: 5px;
 }
 .modal__img img{

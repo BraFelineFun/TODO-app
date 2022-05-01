@@ -3,6 +3,6 @@
     font-size: 24px;
     border-radius: 25px;
     outline: none;
-    border: 2px solid #027a81;
+    border: 2px solid rgb(var(--clrPrimary));
     cursor: pointer;
 }

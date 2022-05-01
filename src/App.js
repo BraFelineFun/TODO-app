@@ -89,6 +89,9 @@ function App() {
         // setIsUndo(task_unit.id);
     }
 
+
+
+
   return (
     <div className="App">
         {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
@@ -102,7 +105,8 @@ function App() {
                     <a href={"#Undone Tasks"}>Undo tasks</a>
                     <a href={"#Done Tasks"}>Done tasks</a>
                 </nav>
-                <div className="addTask">
+                <div className="addTask --smallBtn">
+                    <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
                     <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
                 </div>
             </header>
@@ -112,32 +116,24 @@ function App() {
                 <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
             }
 
-          {!isDataLoaded &&
-              <MyLoad/>
-          }
-            {/*//TODO: Перенести внутрь!!!!!*/}
-            <div className="content__placeholder"><a name={"Undone Tasks"}></a></div>
-          {isDataLoaded &&
-
-
-              <TaskList
-                  setCheck={checkBox_set}
-                  tasks={tasks.filter(task => task.done === false)}
-                  removeTask={removeTask}
-                  title={"Undone Tasks"}
-              />
-          }
-
-          <div className="content__placeholder"><a name={"Done Tasks"}></a></div>
-          {isDataLoaded &&
-              <TaskList
-                  setCheck={checkBox_set}
-                  tasks={tasks.filter(task => task.done !== false)}
-                  removeTask={removeTask}
-                  title={"Done Tasks"}
-              />
-          }
-
+            {/*Отрисовка Элементов TASKLIST либо myLoad*/}
+            {!isDataLoaded && <MyLoad/>}
+            {isDataLoaded &&
+                <TaskList
+                    setCheck={checkBox_set}
+                    tasks={tasks.filter(task => task.done === false)}
+                    removeTask={removeTask}
+                    title={"Undone Tasks"}
+                />
+            }
+            {isDataLoaded &&
+                <TaskList
+                    setCheck={checkBox_set}
+                    tasks={tasks.filter(task => task.done !== false)}
+                    removeTask={removeTask}
+                    title={"Done Tasks"}
+                />
+            }
 
 
         </div>

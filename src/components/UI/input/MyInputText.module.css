@@ -5,5 +5,5 @@
     /*     margin-bottom: 30px;*/
      padding: 10px;
     border-radius: 10px;
-    border: 2px solid #027a81;
+    border: 2px solid rgb(var(--clrPrimary));
 }

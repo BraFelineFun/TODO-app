@@ -1,3 +1,5 @@
+
+
 .loading{
     width: 100%;
     display: flex;
@@ -11,7 +13,7 @@
     height: 50px;
 }
 .spinner .path {
-    stroke: rgba(0, 158, 255, 0.51);
+    stroke: var(--clrContentBorder);
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
 }
