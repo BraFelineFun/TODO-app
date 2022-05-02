@@ -2,9 +2,8 @@ import React, {useEffect, useState} from "react";
 import './styles/App.css'
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
-import MyButton from "./components/UI/button/MyButton";
 import MyLoad from "./components/UI/load/MyLoad";
-import Undo from "./components/Undo";
+import Header from "./components/Header";
 
 
 function App() {
@@ -21,6 +20,8 @@ function App() {
     const [isModal, setIsModal] = useState(false)
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isUndo, setIsUndo] = useState(-1);
+    const [userName, setUserName] = useState("Vladfsadfdsfgsdfgfasdfasdfasdf");
+
 
     useEffect( () => {
         if (localStorage.length === 0){
@@ -98,38 +99,8 @@ function App() {
         {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
 
         <div className="content">
-            <header>
-                <div className="burger" onClick={(e) => {
-                    e.currentTarget.classList.toggle('--activeMenuBurger');
-                    e.currentTarget.children[0].classList.toggle("--activeMenuBurger");
 
-                    const menu = document.querySelector(".menu__wrapper");
-                    menu.classList.toggle("--activeMenuWrapper")
-                }}>
-                    <span></span>
-                </div>
-
-                <div className="header__title">
-                    <h1 >TODO LIST</h1>
-                </div>
-                <div className="addTask --smallBtn">
-                    <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
-                    <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
-                </div>
-
-                <div className="menu__wrapper">
-                    <div className="menu">
-                        <nav>
-                            <h2 className={"menu__title"}>Навигация</h2>
-                            <a href={"#Undone Tasks"}>Undo tasks</a>
-                            <a href={"#Done Tasks"}>Done tasks</a>
-                        </nav>
-                    </div>
-                </div>
-
-            </header>
-
-
+            <Header userName={userName} setIsModal={setIsModal} isDataLoaded={isDataLoaded}/>
             {isModal &&
                 <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
             }

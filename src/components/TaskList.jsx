@@ -11,6 +11,7 @@ const TaskList = ({tasks, setCheck, removeTask, title}) => {
 
             <div className="list">
                 <h1>{title}</h1>
+                <hr/>
                 {tasks.length !== 0
                     ?tasks.map((task) =>
                         <Task
