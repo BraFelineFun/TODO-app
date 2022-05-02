@@ -20,7 +20,7 @@ const TaskList = ({tasks, setCheck, removeTask, title}) => {
                             setCheck={setCheck}
                             removeTask={removeTask}
                         />)
-                    :   <h2 style={{fontStyle:"italic", paddingLeft:"15px"}}>
+                    :   <h2 style={{marginTop: "20px", fontStyle:"italic", paddingLeft:"15px"}}>
                             There's nothing here yet :)
                         </h2>
                 }

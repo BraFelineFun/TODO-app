@@ -219,7 +219,7 @@ header{
         top:0;
         left: 0;
         width: 100%;
-        height: 10vh;
+        height: 50px;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -234,8 +234,8 @@ header{
     .burger{
         position: relative;
         z-index: 5;
-        width: 6vh;
-        height: 4vh;
+        width: 45px;
+        height: 30px;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
@@ -277,6 +277,27 @@ header{
         transform: rotate(-45deg) translate(0px, 50%);
     }
 
+    .addTask{
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+    .--smallBtn > button{
+        width: 40px;
+        height: 40px;
+        min-width: 0;
+
+        margin: 0;
+
+        border-radius: 50%;
+        border: 1vw solid rgb(var(--clrPrimary));
+        color: transparent;
+        -webkit-background-size: cover;
+        background-color: rgb(var(--clrPrimary));
+        background-size: cover;
+        background-image:
+                url("https://cdn.icon-icons.com/icons2/916/PNG/128/Plus_icon-icons.com_71848.png");
+    }
 
     .menu__wrapper{
         z-index: 2;
@@ -298,6 +319,7 @@ header{
         position: absolute;
         left: 0;
         top: 0;
+
 
         height: 100vh;
         width: 85vw;
@@ -338,11 +360,6 @@ header{
         background-color: #fff;
         margin: 0 20px 0.8vw 20px;
     }
-    .addTask{
-        display: flex;
-        justify-content: center;
-        margin: 0;
-    }
     .content{
         padding: 0;
     }
@@ -350,8 +367,8 @@ header{
         height: 10vh;
     }
     .list{
-        max-height: 100vh;
         height: 85vh;
+        min-height: 85vh;
         padding: 5vh;
         border: 0;
         margin: 0;
@@ -373,20 +390,5 @@ header{
         height: 20px
     }
 
-    .--smallBtn > button{
-        width: 6vh;
-        min-width: 0;
-        height: 6vh;
 
-        margin: 0;
-
-        border-radius: 50%;
-        border: 1vw solid rgb(var(--clrPrimary));
-        color: transparent;
-        -webkit-background-size: cover;
-        background-color: rgb(var(--clrPrimary));
-        background-size: cover;
-        background-image:
-                url("https://cdn.icon-icons.com/icons2/916/PNG/128/Plus_icon-icons.com_71848.png");
-    }
 }
