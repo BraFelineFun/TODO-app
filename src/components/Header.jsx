@@ -1,11 +1,37 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyButton from "./UI/button/MyButton";
 import MyUser from "./UI/user/MyUser";
 
 const Header = ({isDataLoaded, setIsModal, userName}) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
 
+    useEffect(() =>{
+        console.log("изменился");
+    })
+
+    //Debounce function to prevent multiply state change,
+    // but probably might have problems if used manyTimes
+    // because this in function uses window context
+    function debounce(callee, timeoutMs) {
+        return function perform(...args) {
+            let previousCall = this.lastCall;
+            this.lastCall = Date.now();
+            if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+                clearTimeout(this.lastCallTimer);
+            }
+            this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
+        };
+    }
+    let setter = () =>{
+        setIsMobile(window.innerWidth < 806)
+    }
+    const debouncedSetIsMobile = debounce(setter, 50);
+
+    window.addEventListener('resize', debouncedSetIsMobile)
+
+
     function updateMenu(){
+
         //SideBar functionality
         const burger = document.querySelector(".burger");
         burger.classList.toggle('--activeMenuBurger');

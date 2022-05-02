@@ -8,6 +8,7 @@ import Header from "./components/Header";
 
 function App() {
     //TODO Drag'n'Drop таксов
+    // TODO попробовать сделать undo при помощи списка и дебаунсера
 
     const [tasks, setTasks] = useState([
         // {
@@ -20,7 +21,7 @@ function App() {
     const [isModal, setIsModal] = useState(false)
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isUndo, setIsUndo] = useState(-1);
-    const [userName, setUserName] = useState("Vladfsadfdsfgsdfgfasdfasdfasdf");
+    const [userName, setUserName] = useState("Vlad");
 
 
     useEffect( () => {
