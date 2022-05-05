@@ -5,9 +5,7 @@ const TaskList = ({tasks, setCheck, removeTask, title}) => {
 
     return (
         <div className={"list__wrapper"}>
-            <div className="content__placeholder">
-                <a name={title}></a>
-            </div>
+            <div className="content__placeholder"></div>
 
             <div className="list">
                 <h1>{title}</h1>

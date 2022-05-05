@@ -1,43 +1,17 @@
-import React, {useEffect, useState} from 'react';
 import MyButton from "./UI/button/MyButton";
 import MyUser from "./UI/user/MyUser";
 
-const Header = ({isDataLoaded, setIsModal, userName}) => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
+const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, userName}) => {
 
-    useEffect(() =>{
-        console.log("изменился");
-    })
-
-    //Debounce function to prevent multiply state change,
-    // but probably might have problems if used manyTimes
-    // because this in function uses window context
-    function debounce(callee, timeoutMs) {
-        return function perform(...args) {
-            let previousCall = this.lastCall;
-            this.lastCall = Date.now();
-            if (previousCall && this.lastCall - previousCall <= timeoutMs) {
-                clearTimeout(this.lastCallTimer);
-            }
-            this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
-        };
-    }
-    let setter = () =>{
-        setIsMobile(window.innerWidth < 806)
-    }
-    const debouncedSetIsMobile = debounce(setter, 50);
-
-    window.addEventListener('resize', debouncedSetIsMobile)
+    const burger = document.querySelector(".burger");
 
 
     function updateMenu(){
 
         //SideBar functionality
-        const burger = document.querySelector(".burger");
         burger.classList.toggle('--activeMenuBurger');
         burger.children[0].classList.toggle("--activeMenuBurger");
         document.querySelector(".menu__wrapper").classList.toggle("--activeMenuWrapper");
-
     }
 
     return (
@@ -68,8 +42,19 @@ const Header = ({isDataLoaded, setIsModal, userName}) => {
                     <div className="menu__navigation">
                         <nav>
                             <h2 className={"menu__title"}>Navigation</h2>
-                            <a href={"#Undone Tasks"} onClick={updateMenu}>Undo tasks</a>
-                            <a href={"#Done Tasks"} onClick={updateMenu}>Done tasks</a>
+                            <a
+                                onClick={() => {
+                                    updateMenu();
+                                    setListPage(0);
+                            }}
+                            >Undo tasks</a>
+
+                            <a
+                                onClick={() => {
+                                    updateMenu();
+                                    setListPage(1);
+                            }}
+                            >Done tasks</a>
                         </nav>
                     </div>
 

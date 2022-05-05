@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import './styles/App.css'
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
@@ -22,9 +22,14 @@ function App() {
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isUndo, setIsUndo] = useState(-1);
     const [userName, setUserName] = useState("Vlad");
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
+    const [listPage, setListPage] = useState(0);
+    const taskList = []; //sets in getTaskList
+
 
 
     useEffect( () => {
+        window.addEventListener('resize', debouncedSetIsMobile);
         if (localStorage.length === 0){
             async function fetchData(){
                 try{
@@ -51,7 +56,30 @@ function App() {
             })
             setIsDataLoaded(true);
         }
+        return (_ => window.removeEventListener('resize', debouncedSetIsMobile))
     }, [])
+
+
+
+
+
+    //Debounce function to prevent multiply state change,
+    // but probably might have problems if used many Times
+    // because this in function uses window context
+    function debounce(callee, timeoutMs) {
+        return function perform(...args) {
+            let previousCall = this.lastCall;
+            this.lastCall = Date.now();
+            if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+                clearTimeout(this.lastCallTimer);
+            }
+            this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
+        };
+    }
+    let setter = () =>{
+        setIsMobile(window.innerWidth < 806)
+    }
+    const debouncedSetIsMobile = debounce(setter, 50);
 
 
 
@@ -91,7 +119,38 @@ function App() {
         // setIsUndo(task_unit.id);
     }
 
+    function getTaskList(){
 
+        //works only once - to fill task List
+        if(!taskList.length){
+            taskList.push(
+                <TaskList
+                    setCheck={checkBox_set}
+                    tasks={tasks.filter(task => task.done === false)}
+                    removeTask={removeTask}
+                    title={"Undone Tasks"}
+                />,
+                <TaskList
+                    setCheck={checkBox_set}
+                    tasks={tasks.filter(task => task.done !== false)}
+                    removeTask={removeTask}
+                    title={"Done Tasks"}
+                />
+            )
+        }
+        // console.log("перерисовка") ------Почему столько раз вызываается
+
+        {/*Отрисовка Элементов TASK LIST либо myLoad*/}
+        if (!isDataLoaded)
+            return <MyLoad/>;
+        else{
+            if(isMobile)
+                return taskList[listPage];
+            else
+                return taskList;
+        }
+
+    }
 
 
 
@@ -100,30 +159,20 @@ function App() {
         {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
 
         <div className="content">
-
-            <Header userName={userName} setIsModal={setIsModal} isDataLoaded={isDataLoaded}/>
+            <Header
+                setListPage={setListPage}
+                isMobile={isMobile}
+                userName={userName}
+                setIsModal={setIsModal}
+                isDataLoaded={isDataLoaded}
+            />
             {isModal &&
                 <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
             }
 
-            {/*Отрисовка Элементов TASKLIST либо myLoad*/}
-            {!isDataLoaded && <MyLoad/>}
-            {isDataLoaded &&
-                <TaskList
-                    setCheck={checkBox_set}
-                    tasks={tasks.filter(task => task.done === false)}
-                    removeTask={removeTask}
-                    title={"Undone Tasks"}
-                />
-            }
-            {isDataLoaded &&
-                <TaskList
-                    setCheck={checkBox_set}
-                    tasks={tasks.filter(task => task.done !== false)}
-                    removeTask={removeTask}
-                    title={"Done Tasks"}
-                />
-            }
+
+            {/*Draw a list*/}
+            {getTaskList()}
 
 
         </div>
