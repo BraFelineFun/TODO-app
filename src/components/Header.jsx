@@ -1,7 +1,7 @@
 import MyButton from "./UI/button/MyButton";
 import MyUser from "./UI/user/MyUser";
 
-const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, userName}) => {
+const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, setIsLoginModal, user}) => {
 
     const burger = document.querySelector(".burger");
 
@@ -24,7 +24,7 @@ const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, userName}) => {
                 <div className="header__title">
                     <h1 >TODO LIST</h1>
                 </div>
-                {!isMobile && <MyUser userName={userName}/>}
+                {!isMobile && <MyUser user={user} setIsLoginModal={setIsLoginModal}/>}
             </div>
 
             <div className="addTask --smallBtn">
@@ -36,7 +36,7 @@ const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, userName}) => {
             <div className="menu__wrapper" onClick={updateMenu}>
                 <div className="menu" onClick={e => e.stopPropagation()}>
                     <div className="menu__user">
-                        {isMobile && <MyUser userName={userName}/>}
+                        {isMobile && <MyUser user={user} setIsLoginModal={setIsLoginModal}/>}
                     </div>
 
                     <div className="menu__navigation">

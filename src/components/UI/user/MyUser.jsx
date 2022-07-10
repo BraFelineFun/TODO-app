@@ -1,14 +1,15 @@
 import React from 'react';
 import cl from "./MyUser.module.css"
 
-const MyUser = ({userName}) => {
+const MyUser = ({user, setIsLoginModal}) => {
+
     return (
-        <div className={cl.user}>
+        <div className={cl.user} onClick={() => setIsLoginModal(true)}>
             <div className={cl.user__greeting}>
-                <p>Hello, {userName}</p>
+                <p>Hello, {user.name}</p>
             </div>
             <div className={cl.user__userImg}>
-                <img src="https://img.icons8.com/ios-glyphs/344/user--v1.png"
+                <img src={user.image}
                      alt="userImg"/>
             </div>
         </div>

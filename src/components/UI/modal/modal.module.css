@@ -17,8 +17,7 @@
 
     max-width: min(320px, 95vw);
     width: 320px;
-    height: 500px;
-    max-height: min(500px, 95vh);
+    max-height: min(700px, 95vh);
 
     background-color: white;
     border-radius: 5px;

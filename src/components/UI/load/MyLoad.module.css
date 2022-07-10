@@ -1,10 +1,18 @@
 
 
+
 .loading{
+    z-index: 10;
+    position: absolute;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-top: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
 .spinner {
     animation: rotate 2s linear infinite;

@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './modal.module.css'
 import Motion from "react-motion/lib/Motion";
 import {presets, spring} from "react-motion";
-const Modal = ({children, isModal, closeModal, ...props}) => {
+const Modal = ({children, setModal, ...props}) => {
     return (
         <Motion
             defaultStyle={{
@@ -17,7 +17,7 @@ const Modal = ({children, isModal, closeModal, ...props}) => {
             {interpolatedStyles => (
             <div
                 className={classes.modal__wrapper}
-                onClick={closeModal}
+                onClick={() => setModal(false)}
             >
                 {/*using Motion to animate modal appearance*/}
                 <div
@@ -34,7 +34,7 @@ const Modal = ({children, isModal, closeModal, ...props}) => {
                         <img
                             src="https://cdn.onlinewebfonts.com/svg/download_32988.png"
                             alt="close"
-                            onClick={closeModal}
+                            onClick={() => setModal(false)}
                         />
                     </div>
                     {children}

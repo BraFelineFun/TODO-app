@@ -1,14 +1,15 @@
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './styles/App.css'
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 import MyLoad from "./components/UI/load/MyLoad";
 import Header from "./components/Header";
+import Modal from "./components/UI/modal/modal";
+import LoginModal from "./components/LoginModal";
 
 
 function App() {
     //TODO Drag'n'Drop таксов
-    // TODO попробовать сделать undo при помощи списка и дебаунсера
 
     const [tasks, setTasks] = useState([
         // {
@@ -19,25 +20,27 @@ function App() {
     ]);
     const  urlTODO = "https://jsonplaceholder.typicode.com/todos";
     const [isModal, setIsModal] = useState(false)
+    const [isLoginModal, setIsLoginModal] = useState(false);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isUndo, setIsUndo] = useState(-1);
-    const [userName, setUserName] = useState("Vlad");
+    const [user, setUser] = useState({loggedIn: false, name: "Guest", image: "https://img.icons8.com/ios-glyphs/344/user--v1.png"});
     const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
     const [listPage, setListPage] = useState(0);
     const taskList = []; //sets in getTaskList
 
-
+    const ref = useRef(null);
 
     useEffect( () => {
         window.addEventListener('resize', debouncedSetIsMobile);
         if (localStorage.length === 0){
             async function fetchData(){
                 try{
-                    let response = await fetch(urlTODO + "?_limit=1");
+                    let response = await fetch(urlTODO + "?_limit=5");
                     if (response.ok) {
                         let answer = await response.json();
                         answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
-                        setIsDataLoaded(true)
+                        setTimeout(() =>{setIsDataLoaded(true)}, 500);
+                        ref.current.classList.add('.--loaded');
                     }
                     else
                         console.log(`Ошибка загрузки данных: ${response.status}`)
@@ -54,7 +57,8 @@ function App() {
                 // console.log(task);
                 addNewTask(task);
             })
-            setIsDataLoaded(true);
+            setTimeout(() =>{setIsDataLoaded(true)}, 500);
+            ref.current.classList.add('.--loaded');
         }
         return (_ => window.removeEventListener('resize', debouncedSetIsMobile))
     }, [])
@@ -94,7 +98,6 @@ function App() {
         }
     }
 
-    let closeModal = () =>{setIsModal(false)}
 
     let checkBox_set = (id, checkbox) =>{
         setTasks(tasks.map(task =>
@@ -138,37 +141,36 @@ function App() {
                 />
             )
         }
-        // console.log("перерисовка") ------Почему столько раз вызываается
+        console.log("перерисовка"); //------Почему столько раз вызываается
 
-        {/*Отрисовка Элементов TASK LIST либо myLoad*/}
-        if (!isDataLoaded)
-            return <MyLoad/>;
-        else{
-            if(isMobile)
-                return taskList[listPage];
-            else
-                return taskList;
-        }
-
+        {/*Отрисовка Элементов TASK LIST*/}
+        if(isMobile)
+            return taskList[listPage];
+        else
+            return taskList;
     }
-
 
 
   return (
     <div className="App">
         {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
 
+        {!isDataLoaded && <MyLoad ref={ref}/>}
         <div className="content">
             <Header
                 setListPage={setListPage}
                 isMobile={isMobile}
-                userName={userName}
+                setIsLoginModal={setIsLoginModal}
+                user={user}
                 setIsModal={setIsModal}
                 isDataLoaded={isDataLoaded}
             />
             {isModal &&
-                <TaskForm isModal={isModal} addNewTask={addNewTask} closeModal={closeModal}/>
+                <TaskForm isModal={isModal} addNewTask={addNewTask} setModal={setIsModal}/>
             }
+
+            {isLoginModal &&
+                <LoginModal user={user} setIsLoginModal={setIsLoginModal}/>}
 
 
             {/*Draw a list*/}

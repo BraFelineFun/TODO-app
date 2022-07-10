@@ -5,7 +5,7 @@ import MyButton from "./UI/button/MyButton";
 import Modal from "./UI/modal/modal";
 
 
-const TaskForm = ({addNewTask, isModal, closeModal}) => {
+const TaskForm = ({addNewTask, isModal, setModal}) => {
 
     const [newTask, setNewTask] = useState({
         id: 0,
@@ -34,7 +34,7 @@ const TaskForm = ({addNewTask, isModal, closeModal}) => {
 
     function createNewTask (){
         addNewTask(newTask);
-        closeModal();
+        setModal(false);
         setNewTask({id:0, done: false, text: ''})
     }
 
@@ -45,7 +45,7 @@ const TaskForm = ({addNewTask, isModal, closeModal}) => {
     })
 
     return (
-        <Modal isModal={isModal} closeModal={closeModal}>
+        <Modal isModal={isModal} setModal={setModal}>
 
             <h2 className='modal__h2'>Add a new task</h2>
             <div className="modal__form">
