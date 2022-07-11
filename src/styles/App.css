@@ -223,6 +223,7 @@ header{
     border: 4px solid var(--clrAccent);
     border-radius: 10px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 .login_choiseBox span{
     display: block;
@@ -250,6 +251,7 @@ header{
     left: 320px;
     background-color: #fff;
     border-radius: 15px;
+    border: 2px solid var(--clrAccent);
     width: 200px;
     padding: 10px 25px;
     font-size: 18px;
@@ -259,20 +261,51 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 .login_validateImg img{
     width: 50px;
     height: 50px;
 
 }
-.login_passDescription{
-
+.login_validateImg p{
+    text-align: center;
 }
 .login_passDescription ul{
     padding-top: 10px;
     font-size: 16px;
 }
+.login_passDescription li::before{
+    padding-left: 100px;
+}
 
+/*UserData*/
+.update_exit{
+    border: 2px solid rgb(77, 0, 0);
+    border-radius: 5px;
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #cb0014;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.userUpdate_previewLabel{
+    margin-bottom: 10px;
+}
+.userUpdate_preview{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.update_changeButtons{
+    display: flex;
+    justify-content: space-between;
+}
+.update_changeButtons img{
+    height: 5vh;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 805px) {
     body{
@@ -452,11 +485,25 @@ header{
         margin-left: 10px;
         font-size: 18px;
     }
-    .list__delete{}
     .list__delete img{
         width: 20px;
         height: 20px
     }
 
+    .login_validatePass{
+        position: static;
+        width: auto;
+        margin-bottom: 15px;
+    }
+    .login_validatePass hr{
+        margin-top: 10px;
+    }
+    .login_validateImg{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .login_passDescription ul{
+        margin-left: 19px;
+    }
 
 }

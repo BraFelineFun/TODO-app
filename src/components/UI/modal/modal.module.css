@@ -8,6 +8,8 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
+}
+.modal__wrapper.modalStyle{
     background-color: rgba(57, 62, 70, 0.66);
 }
 .modal{
@@ -21,11 +23,14 @@
 
     background-color: white;
     border-radius: 5px;
-    border: 5px solid var(--clrBgColor);
     -webkit-box-shadow: 4px 10px 69px 55px rgba(var(--clrPrimary), 0.3);
     -moz-box-shadow: 4px 10px 69px 55px rgba(var(--clrPrimary), 0.3);
     box-shadow: 4px 10px 69px 55px rgba(var(--clrPrimary), 0.3);
-    padding: 25px 15px;
+    padding: 50px 15px 15px 15px;
+}
+.modal.modalStyle{
+    padding: 15px 15px;
+    border: 5px solid var(--clrBgColor);
 }
 
 .modal__img{
@@ -35,14 +40,30 @@
     position: absolute;
     right: 15px;
     top: 15px;
-    height: 50px;
-    width: 50px;
+
     cursor: pointer;
     background-color: var(--clrBgColor);
     border-radius: 5px;
 }
-.modal__img img{
+.img{
     display: block;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
+
+}
+.img.modalStyle{
+    display: block;
+    height: min(5vw, 5vh);
+    width: min(5vw, 5vh);
+}
+.modalStyle{}
+.modal__splitter{
+    margin-bottom: 10px;
+}
+
+@media screen and (orientation:landscape) and (max-width: 805px) {
+    .modal{
+        max-width: 90vw;
+        overflow-y: auto;
+    }
 }

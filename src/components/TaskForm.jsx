@@ -5,7 +5,7 @@ import MyButton from "./UI/button/MyButton";
 import Modal from "./UI/modal/modal";
 
 
-const TaskForm = ({addNewTask, isModal, setModal}) => {
+const TaskForm = ({addNewTask, setModal}) => {
 
     const [newTask, setNewTask] = useState({
         id: 0,
@@ -45,7 +45,7 @@ const TaskForm = ({addNewTask, isModal, setModal}) => {
     })
 
     return (
-        <Modal isModal={isModal} setModal={setModal}>
+        <Modal setModal={setModal}>
 
             <h2 className='modal__h2'>Add a new task</h2>
             <div className="modal__form">

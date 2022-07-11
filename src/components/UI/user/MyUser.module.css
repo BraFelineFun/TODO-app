@@ -30,12 +30,15 @@
     background-color: white;
     border-radius: 50%;
     border: 4px solid rgb(var(--clrPrimary));
+    width: 6vh;
+    height: 6vh;
+    overflow: hidden;
 }
 p{
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .user img{
-    width: 5vh;
-    height: 5vh;
+    width: 85%;
+    height: 85%;
 }

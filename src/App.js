@@ -4,13 +4,13 @@ import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 import MyLoad from "./components/UI/load/MyLoad";
 import Header from "./components/Header";
-import Modal from "./components/UI/modal/modal";
 import LoginModal from "./components/LoginModal";
+import UserUpdate from "./components/UserUpdate";
+import {DefaultUser, UserData} from "./UserData";
+import Modal from "./components/UI/modal/modal";
 
 
 function App() {
-    //TODO Drag'n'Drop таксов
-
     const [tasks, setTasks] = useState([
         // {
         //     // id: 1,
@@ -23,7 +23,7 @@ function App() {
     const [isLoginModal, setIsLoginModal] = useState(false);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isUndo, setIsUndo] = useState(-1);
-    const [user, setUser] = useState({loggedIn: false, name: "Guest", image: "https://img.icons8.com/ios-glyphs/344/user--v1.png"});
+    const [user, setUser] = useState({...UserData[0], loggedIn:true}); //useState(DefaultUser);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
     const [listPage, setListPage] = useState(0);
     const taskList = []; //sets in getTaskList
@@ -166,12 +166,17 @@ function App() {
                 isDataLoaded={isDataLoaded}
             />
             {isModal &&
-                <TaskForm isModal={isModal} addNewTask={addNewTask} setModal={setIsModal}/>
+                <TaskForm addNewTask={addNewTask} setModal={setIsModal}/>
             }
 
-            {isLoginModal &&
-                <LoginModal user={user} setIsLoginModal={setIsLoginModal}/>}
+            {isLoginModal && !user.loggedIn &&
+                <LoginModal setUser={setUser} user={user} setIsLoginModal={setIsLoginModal}/>
+            }
+            {isLoginModal && user.loggedIn &&
+                <UserUpdate setUser={setUser} user={user} setIsUpdateModal={setIsLoginModal}/>
+            }
 
+            {/*<Modal typeMessage={true}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aliquam assumenda consequatur cupiditate ducimus ea earum exercitationem facere illo incidunt iure libero minima nobis odit provident reiciendis, reprehenderit similique ut!</Modal>*/}
 
             {/*Draw a list*/}
             {getTaskList()}
