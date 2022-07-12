@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import './styles/App.css'
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
@@ -7,17 +7,11 @@ import Header from "./components/Header";
 import LoginModal from "./components/LoginModal";
 import UserUpdate from "./components/UserUpdate";
 import {DefaultUser, UserData} from "./UserData";
-import Modal from "./components/UI/modal/modal";
+import {useDebounce} from "./hooks/useDebounce";
 
 
 function App() {
-    const [tasks, setTasks] = useState([
-        // {
-        //     // id: 1,
-        //     // done:false,
-        //     // text: "здарова отец"
-        // }
-    ]);
+    const [tasks, setTasks] = useState([]);
     const  urlTODO = "https://jsonplaceholder.typicode.com/todos";
     const [isModal, setIsModal] = useState(false)
     const [isLoginModal, setIsLoginModal] = useState(false);
@@ -25,65 +19,51 @@ function App() {
     const [isUndo, setIsUndo] = useState(-1);
     const [user, setUser] = useState({...UserData[0], loggedIn:true}); //useState(DefaultUser);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
-    const [listPage, setListPage] = useState(0);
-    const taskList = []; //sets in getTaskList
+    const [pageNumber, setPageNumber] = useState(0); //Number of page to draw
+
+
+
 
     const ref = useRef(null);
 
-    useEffect( () => {
+
+    async function fetchData(){
+        try{
+            let response = await fetch(urlTODO + "?_limit=5");
+            if (response.ok) {
+                let answer = await response.json();
+                answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
+                setTimeout(() =>{setIsDataLoaded(true)}, 500);
+                ref.current.classList.add('.--loaded');
+            }
+            else
+                console.log(`Ошибка загрузки данных: ${response.status}`)
+        }
+        catch (e){
+            console.log(`Произошла ошибка: ${e}`)
+        }
+    }
+
+    useEffect(() => {
         window.addEventListener('resize', debouncedSetIsMobile);
         if (localStorage.length === 0){
-            async function fetchData(){
-                try{
-                    let response = await fetch(urlTODO + "?_limit=5");
-                    if (response.ok) {
-                        let answer = await response.json();
-                        answer.map((todo) => addNewTask({id:todo.id, done: todo.completed, text: todo.title}));
-                        setTimeout(() =>{setIsDataLoaded(true)}, 500);
-                        ref.current.classList.add('.--loaded');
-                    }
-                    else
-                        console.log(`Ошибка загрузки данных: ${response.status}`)
-                }
-                catch (e){
-                    console.log(`Произошла ошибка: ${e}`)
-                }
-            }
             fetchData();
             localStorage.setItem('tasks', '[]');
         }
         else{
             JSON.parse(localStorage.tasks).forEach(task =>{
-                // console.log(task);
                 addNewTask(task);
             })
             setTimeout(() =>{setIsDataLoaded(true)}, 500);
             ref.current.classList.add('.--loaded');
         }
+
         return (_ => window.removeEventListener('resize', debouncedSetIsMobile))
     }, [])
 
-
-
-
-
-    //Debounce function to prevent multiply state change,
-    // but probably might have problems if used many Times
-    // because this in function uses window context
-    function debounce(callee, timeoutMs) {
-        return function perform(...args) {
-            let previousCall = this.lastCall;
-            this.lastCall = Date.now();
-            if (previousCall && this.lastCall - previousCall <= timeoutMs) {
-                clearTimeout(this.lastCallTimer);
-            }
-            this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
-        };
-    }
-    let setter = () =>{
+    const debouncedSetIsMobile = useDebounce(() =>{
         setIsMobile(window.innerWidth < 806)
-    }
-    const debouncedSetIsMobile = debounce(setter, 50);
+    }, 50);
 
 
 
@@ -122,43 +102,39 @@ function App() {
         // setIsUndo(task_unit.id);
     }
 
-    function getTaskList(){
+    const listOfPages = useMemo(() => {
+        return [
+            <TaskList
+                setCheck={checkBox_set}
+                tasks={tasks.filter(task => task.done === false)}
+                removeTask={removeTask}
+                title={"Undone Tasks"}
+            />,
+            <TaskList
+                setCheck={checkBox_set}
+                tasks={tasks.filter(task => task.done !== false)}
+                removeTask={removeTask}
+                title={"Done Tasks"}
+            />
+        ]}, [tasks]); //pages (UnDone, Done)
 
-        //works only once - to fill task List
-        if(!taskList.length){
-            taskList.push(
-                <TaskList
-                    setCheck={checkBox_set}
-                    tasks={tasks.filter(task => task.done === false)}
-                    removeTask={removeTask}
-                    title={"Undone Tasks"}
-                />,
-                <TaskList
-                    setCheck={checkBox_set}
-                    tasks={tasks.filter(task => task.done !== false)}
-                    removeTask={removeTask}
-                    title={"Done Tasks"}
-                />
-            )
-        }
-        console.log("перерисовка"); //------Почему столько раз вызываается
-
-        {/*Отрисовка Элементов TASK LIST*/}
+    const taskList2 = useMemo(() => {
         if(isMobile)
-            return taskList[listPage];
+            return listOfPages[pageNumber];
         else
-            return taskList;
-    }
-
+            return listOfPages;
+    }, [listOfPages, pageNumber]) //Memorized list of pages to draw
 
   return (
     <div className="App">
         {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
 
-        {!isDataLoaded && <MyLoad ref={ref}/>}
+        {!isDataLoaded &&
+            <MyLoad ref={ref}/>
+        }
         <div className="content">
             <Header
-                setListPage={setListPage}
+                setPageNumber={setPageNumber}
                 isMobile={isMobile}
                 setIsLoginModal={setIsLoginModal}
                 user={user}
@@ -166,7 +142,10 @@ function App() {
                 isDataLoaded={isDataLoaded}
             />
             {isModal &&
-                <TaskForm addNewTask={addNewTask} setModal={setIsModal}/>
+                <TaskForm
+                    addNewTask={addNewTask}
+                    setModal={setIsModal}
+                />
             }
 
             {isLoginModal && !user.loggedIn &&
@@ -176,10 +155,9 @@ function App() {
                 <UserUpdate setUser={setUser} user={user} setIsUpdateModal={setIsLoginModal}/>
             }
 
-            {/*<Modal typeMessage={true}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aliquam assumenda consequatur cupiditate ducimus ea earum exercitationem facere illo incidunt iure libero minima nobis odit provident reiciendis, reprehenderit similique ut!</Modal>*/}
 
-            {/*Draw a list*/}
-            {getTaskList()}
+            {/*Draw memorized list*/}
+            {taskList2}
 
 
         </div>

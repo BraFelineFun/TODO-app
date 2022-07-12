@@ -1,0 +1,50 @@
+.validatePass{
+    position: absolute;
+    top: 150px;
+    left: 320px;
+    background-color: #fff;
+    border-radius: 15px;
+    border: 2px solid var(--clrAccent);
+    width: 200px;
+    padding: 10px 25px;
+    font-size: 18px;
+}
+.validateImg{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.validateImg img{
+    width: 50px;
+    height: 50px;
+
+}
+.validateImg p{
+    text-align: center;
+}
+.passDescription ul{
+    padding-top: 10px;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 805px) {
+
+    .validatePass{
+        position: static;
+        width: auto;
+        margin-bottom: 15px;
+    }
+    .validatePass hr{
+        margin-top: 10px;
+    }
+    .validateImg{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .passDescription ul{
+        margin-left: 19px;
+    }
+
+}

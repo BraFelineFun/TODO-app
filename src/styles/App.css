@@ -244,41 +244,6 @@ header{
     color: var(--clrBgColor);
     font-weight: bold;
 }
-
-.login_validatePass{
-    position: absolute;
-    top: 150px;
-    left: 320px;
-    background-color: #fff;
-    border-radius: 15px;
-    border: 2px solid var(--clrAccent);
-    width: 200px;
-    padding: 10px 25px;
-    font-size: 18px;
-}
-.login_validateImg{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.login_validateImg img{
-    width: 50px;
-    height: 50px;
-
-}
-.login_validateImg p{
-    text-align: center;
-}
-.login_passDescription ul{
-    padding-top: 10px;
-    font-size: 16px;
-}
-.login_passDescription li::before{
-    padding-left: 100px;
-}
-
 /*UserData*/
 .update_exit{
     border: 2px solid rgb(77, 0, 0);
@@ -490,20 +455,6 @@ header{
         height: 20px
     }
 
-    .login_validatePass{
-        position: static;
-        width: auto;
-        margin-bottom: 15px;
-    }
-    .login_validatePass hr{
-        margin-top: 10px;
-    }
-    .login_validateImg{
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .login_passDescription ul{
-        margin-left: 19px;
-    }
+
 
 }

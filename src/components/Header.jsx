@@ -1,13 +1,12 @@
 import MyButton from "./UI/button/MyButton";
 import MyUser from "./UI/user/MyUser";
 
-const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, setIsLoginModal, user}) => {
+const Header = ({setPageNumber,isMobile, isDataLoaded, setIsModal, setIsLoginModal, user}) => {
 
     const burger = document.querySelector(".burger");
 
 
     function updateMenu(){
-
         //SideBar functionality
         burger.classList.toggle('--activeMenuBurger');
         burger.children[0].classList.toggle("--activeMenuBurger");
@@ -24,11 +23,19 @@ const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, setIsLoginModal
                 <div className="header__title">
                     <h1 >TODO LIST</h1>
                 </div>
-                {!isMobile && <MyUser user={user} setIsLoginModal={setIsLoginModal}/>}
+                {!isMobile
+                    &&
+                    <MyUser user={user} setIsLoginModal={setIsLoginModal}/>
+                }
             </div>
 
             <div className="addTask --smallBtn">
-                <MyButton disabled={!isDataLoaded} onClick={() => setIsModal(true)}>Add task</MyButton>
+                <MyButton
+                    disabled={!isDataLoaded}
+                    onClick={() => setIsModal(true)}
+                >
+                    Add task
+                </MyButton>
             </div>
 
 
@@ -45,14 +52,14 @@ const Header = ({setListPage,isMobile, isDataLoaded, setIsModal, setIsLoginModal
                             <a
                                 onClick={() => {
                                     updateMenu();
-                                    setListPage(0);
+                                    setPageNumber(0);
                             }}
                             >Undo tasks</a>
 
                             <a
                                 onClick={() => {
                                     updateMenu();
-                                    setListPage(1);
+                                    setPageNumber(1);
                             }}
                             >Done tasks</a>
                         </nav>
