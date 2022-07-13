@@ -1,0 +1,171 @@
+header{
+    display: flex;
+    flex-direction: column;
+}
+.header__desktopWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.addTask{
+    margin: 50px 0 30px 0;
+}
+
+.addTask button{
+    min-width: min(300px, 70vw);
+    border: 5px solid rgb(var(--clrPrimary));
+    background-color: white;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 805px) {
+    header{
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--clrBgColor);
+        border-bottom: 2px solid var(--clrAccent);
+        padding: 0 2vw;
+    }
+
+    /*---------------*/
+    /*--BURGER-MENU--*/
+    /*---------------*/
+    .burger{
+        position: relative;
+        z-index: 5;
+        width: 45px;
+        height: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .burger::before,
+    .burger::after,
+    .burger > span{
+        left: 0;
+        position: absolute;
+        height: 10%;
+        width: 100%;
+        transition: all 0.3s ease 0s;
+        background-color: var(--clrAccent);
+    }
+    .burger::before,
+    .burger::after{
+        content: "";
+    }
+    .burger::before{
+        top:0;
+    }
+    .burger::after{
+        bottom: 0;
+    }
+    .burger span{
+        top: 50%;
+        transform: scale(1) translate(0px, -50%);
+    }
+    .burger.__activeMenuBurger span{
+        transform: scale(0);
+    }
+    .burger.__activeMenuBurger::before{
+        background-color: var(--clrBgColor);
+        top: 50%;
+        transform: rotate(45deg) translate(0px, -50%);
+    }
+    .burger.__activeMenuBurger::after{
+        background-color: var(--clrBgColor);
+        bottom: 50%;
+        transform: rotate(-45deg) translate(0px, 50%);
+    }
+
+    .addTask{
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+    .smallBtn > button{
+        min-width: 40px;
+        width: 40px;
+        height: 40px;
+
+        margin: 0;
+
+        border-radius: 50%;
+        border: 1vw solid rgb(var(--clrPrimary));
+        color: transparent;
+        -webkit-background-size: cover;
+        background-color: rgb(var(--clrPrimary));
+        background-size: cover;
+        background-image:
+                url("https://cdn.icon-icons.com/icons2/916/PNG/128/Plus_icon-icons.com_71848.png");
+    }
+
+
+    .menu__wrapper{
+        z-index: 2;
+        position: absolute;
+        left: -100%;
+        opacity: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(57, 62, 70, 0.66);
+        transition: all 0.3s ease;
+    }
+    .__activeMenuWrapper{
+        left:0;
+        opacity: 1;
+    }
+
+    .menu{
+        position: absolute;
+        left: 0;
+        top: 0;
+
+
+        height: 100vh;
+        width: 300px;
+        border: 3px solid var(--clrBgColor);
+
+        border-left: 0;
+        border-bottom-right-radius: 30px;
+        border-top-right-radius: 30px;
+
+        padding: 10vh 4vw 0 4vh;
+
+        background-color: var(--clrAccent);
+
+    }
+    .menu > div{
+        margin-top: 3vh;
+    }
+
+    nav{
+        display: flex;
+        flex-direction: column;
+    }
+    nav > .menu__title, a {
+        color:var(--clrBgColor);
+        text-decoration: none;
+    }
+    nav > p{
+        color: white;
+        line-height: 1.5;
+        font-size: 20px;
+    }
+    nav >  p:before{
+        content: "";
+        display: inline-block;
+        border-radius: 50%;
+        width: 7px;
+        height: 7px;
+        background-color: #fff;
+        margin: 0 20px 0.8vw 20px;
+    }
+}

@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useMemo, useRef, useState} from "react";
 import './styles/App.css'
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 import MyLoad from "./components/UI/load/MyLoad";
-import Header from "./components/Header";
-import LoginModal from "./components/LoginModal";
-import UserUpdate from "./components/UserUpdate";
+import Header from "./components/Header/Header";
+import LoginModal from "./components/Login&Update/LoginModal";
+import UserUpdate from "./components/Login&Update/UserUpdate";
 import {DefaultUser, UserData} from "./UserData";
 import {useDebounce} from "./hooks/useDebounce";
+import Undo from "./components/Undo/Undo";
 
 
 function App() {
@@ -16,7 +17,10 @@ function App() {
     const [isModal, setIsModal] = useState(false)
     const [isLoginModal, setIsLoginModal] = useState(false);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
-    const [isUndo, setIsUndo] = useState(-1);
+
+    const [lastRemovedTask,setLastRemovedTask] = useState(-1);
+    const [isUndo, setIsUndo] = useState(false);
+
     const [user, setUser] = useState({...UserData[0], loggedIn:true}); //useState(DefaultUser);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 806);
     const [pageNumber, setPageNumber] = useState(0); //Number of page to draw
@@ -46,7 +50,7 @@ function App() {
 
     useEffect(() => {
         window.addEventListener('resize', debouncedSetIsMobile);
-        if (localStorage.length === 0){
+        if (!localStorage.getItem('tasks')){
             fetchData();
             localStorage.setItem('tasks', '[]');
         }
@@ -96,10 +100,8 @@ function App() {
 
     let removeTask = (task_unit) =>{
         setTasks(tasks.filter(task => task.id !== task_unit.id))
-        let store = JSON.parse(localStorage.tasks);
-        store = store.filter(task => task.id !== task_unit.id);
-        localStorage.tasks = JSON.stringify(store);
-        // setIsUndo(task_unit.id);
+        setIsUndo(true);
+        setLastRemovedTask(task_unit.id);
     }
 
     const listOfPages = useMemo(() => {
@@ -123,11 +125,11 @@ function App() {
             return listOfPages[pageNumber];
         else
             return listOfPages;
-    }, [listOfPages, pageNumber]) //Memorized list of pages to draw
+    }, [listOfPages, pageNumber, isMobile]) //Memorized list of pages to draw
 
   return (
     <div className="App">
-        {/*{isUndo !== -1 && <Undo undoState={{isUndo, setIsUndo}} addNewTask={addNewTask}></Undo>}*/}
+        {isUndo &&<Undo setIsUndo={setIsUndo} setLastRemovedTask={setLastRemovedTask} lastRemovedTask={lastRemovedTask} addNewTask={addNewTask}></Undo>}
 
         {!isDataLoaded &&
             <MyLoad ref={ref}/>

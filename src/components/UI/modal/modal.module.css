@@ -53,8 +53,8 @@
 }
 .img.modalStyle{
     display: block;
-    height: min(5vw, 5vh);
-    width: min(5vw, 5vh);
+    height: 30px;
+    width: 30px;
 }
 .modalStyle{}
 .modal__splitter{

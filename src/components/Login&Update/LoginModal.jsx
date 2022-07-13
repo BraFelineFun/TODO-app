@@ -1,10 +1,11 @@
 import React, { useState} from 'react';
-import MyInputText from "./UI/input/MyInput_text";
-import MyButton from "./UI/button/MyButton";
-import Modal from "./UI/modal/modal";
-import {UserData} from "../UserData"
-import {useDebounce} from "../hooks/useDebounce";
-import Validation from "./UI/validate/Validation";
+import MyInputText from "../UI/input/MyInput_text";
+import MyButton from "../UI/button/MyButton";
+import Modal from "../UI/modal/modal";
+import {UserData} from "../../UserData"
+import {useDebounce} from "../../hooks/useDebounce";
+import Validation from "../UI/validate/Validation";
+import classes from "./Login&Update.module.css"
 
 const LoginModal = ({setUser, user, setIsLoginModal}) => {
 
@@ -53,25 +54,34 @@ const LoginModal = ({setUser, user, setIsLoginModal}) => {
 
     return (
         <Modal EnterCallback={checkValues} setModal={setIsLoginModal}>
-            <div className="login_userImg">
-                <div className="login_imageBox">
-                    <img src={user.image} alt="user"/>
-                </div>
+            <div className={classes.login_userImg}>
+                <img src={user.image} alt="user"/>
             </div>
-            <div className="login_choiseBox">
-                <div className={!isSign? "login_choise activeChoiseLabel": "login_choise"}
-                     onClick={() => setIsSign(false)}
+            <div className={classes.login_choiseBox}>
+                <div
+                    className={
+                        !isSign
+                        ? [classes.login_choise, classes.activeChoiseLabel].join(" ")
+                        : classes.login_choise
+                    }
+                    onClick={() => setIsSign(false)}
                 >LOG IN</div>
 
                 <span></span>
 
-                <div className={isSign? "login_choise activeChoiseLabel": "login_choise"}
+                <div
+                    className={
+                    isSign
+                        ? [classes.login_choise, classes.activeChoiseLabel].join(" ")
+                        : classes.login_choise
+                    }
                      onClick={() => setIsSign(true)}
-                >SIGN IN
+                >
+                    SIGN IN
                 </div>
             </div>
 
-            <div className="login_input">
+            <div className={classes.login_input}>
                 <label htmlFor="login">Enter login:</label>
                 <MyInputText
                     value={enteredData.login}
@@ -80,7 +90,7 @@ const LoginModal = ({setUser, user, setIsLoginModal}) => {
                     type="text"
                 />
             </div>
-            <div className="login_input">
+            <div className={classes.login_input}>
                 <label htmlFor="password">Enter password:</label>
                 <MyInputText
                     onFocus={() => isSign && setIsPasswordFocus(true)}
@@ -107,7 +117,7 @@ const LoginModal = ({setUser, user, setIsLoginModal}) => {
                     </Validation>,
                 /*----------------------*/
 
-                <div className="login_input">
+                <div className={classes.login_input}>
                     <label htmlFor="password">Enter password again:</label>
                     <MyInputText
                         value={enteredData.sndPass}

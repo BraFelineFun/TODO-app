@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import Modal from "./UI/modal/modal";
-import MyInputText from "./UI/input/MyInput_text";
-import MyButton from "./UI/button/MyButton";
-import {DefaultUser} from "../UserData";
+import Modal from "../UI/modal/modal";
+import MyInputText from "../UI/input/MyInput_text";
+import MyButton from "../UI/button/MyButton";
+import {DefaultUser} from "../../UserData";
+import classes from "./Login&Update.module.css"
+import accept from './../../imgs/4436481.png'
 
 const UserUpdate = ({setUser, user, setIsUpdateModal}) => {
 
@@ -50,28 +52,26 @@ const UserUpdate = ({setUser, user, setIsUpdateModal}) => {
 
     return (
         <Modal setModal={setIsUpdateModal} EnterCallback={setChanges}>
-            <div className="update_exit"
+            <div className={classes.update_exit}
                 onClick={() => {
                 setUser(DefaultUser);
                 setIsUpdateModal(false);
             }}
             >Sign out</div>
 
-            <div className="userUpdate_previewLabel">
+            <div className={classes.userUpdate_previewLabel}>
                 <p>Preview:</p>
                 <hr/>
             </div>
-            <div className="userUpdate_preview">
-                <div className="login_userImg">
-                    <div className="login_imageBox">
-                        <img src={!changeImage? user.image: enteredData.image} alt="user"/>
-                    </div>
+            <div className={classes.userUpdate_preview}>
+                <div className={classes.login_userImg}>
+                    <img src={!changeImage? user.image: enteredData.image} alt="user"/>
                 </div>
                 <span></span>
                 <p>{!changeLogin? user.name: enteredData.name}</p>
             </div>
 
-            <div className="login_input">
+            <div className={classes.login_input}>
                 <label htmlFor="name">Enter new login:</label>
                 <MyInputText
                     value={enteredData.name}
@@ -80,7 +80,7 @@ const UserUpdate = ({setUser, user, setIsUpdateModal}) => {
                     type="text"
                 />
             </div>
-            <div className="login_input">
+            <div className={classes.login_input}>
                 <label htmlFor="image">Enter link to an image:</label>
                 <MyInputText
                     value={enteredData.image}
@@ -93,16 +93,16 @@ const UserUpdate = ({setUser, user, setIsUpdateModal}) => {
             {!(changeImage || changeLogin)?
                 <MyButton onClick={setChanges} disabled={enteredData.name==="" && enteredData.image===""}>Save changes</MyButton>
                 :
-                <div className="update_changeButtons">
+                <div className={classes.update_changeButtons}>
                     <img
                         onClick={setChanges}
-                        src="https://cdn-icons.flaticon.com/png/512/4436/premium/4436481.png?token=exp=1657443137~hmac=2dbf7bd6cb681f8d13192d2c45a67b0e"
-                        alt=""
+                        src={accept}
+                        alt="Accept"
                     />
                     <img
                         onClick={setDefault}
                         src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt=""
+                        alt="Decline"
                     />
                 </div>
             }

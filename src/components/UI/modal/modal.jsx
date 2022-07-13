@@ -44,7 +44,7 @@ const Modal = ({children, setModal, EnterCallback, typeMessage=false, ...props})
                     <div className={classes.modal__img}>
                         <img
                             className={[classes.img, classes.modalStyle].join(' ')}
-                            src="https://cdn-icons.flaticon.com/png/512/2961/premium/2961937.png?token=exp=1657541229~hmac=fa77d95d165fa58903caceda565a155e"
+                            src="https://cdn-icons-png.flaticon.com/512/1828/1828747.png"
                             alt="close"
                             onClick={() => setModal(false)}
                         />
