@@ -4,7 +4,7 @@ import MyInputText from "../UI/input/MyInput_text";
 import MyButton from "../UI/button/MyButton";
 import {DefaultUser} from "../../UserData";
 import classes from "./Login&Update.module.css"
-import accept from './../../imgs/4436481.png'
+import accept from '../../imgs/Ok.png'
 
 const UserUpdate = ({setUser, user, setIsUpdateModal}) => {
 
